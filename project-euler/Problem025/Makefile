@@ -1,25 +1,36 @@
-# Copied from: http://stackoverflow.com/questions/1484817/how-do-i-make-a-simple-makefile-gcc-unix
 
-TARGET  := exercise_solution 
+TARGET      := solution 
+TEST_TARGET := test
+GTEST_MAIN  := -lgtest
+ 
 CC      := g++
-CFLAGS  := -g -Wall
+CFLAGS  := -c -Wall -g
+LDFLAGS := -lgtest -lpthread
 
-.PHONY: default all clean
+.PHONY: all solution tests
 
-default: $(TARGET)
-all: default
+all: solution test
 
-OBJECTS := $(patsubst %.cpp, %.o, $(wildcard *.cpp))
+COMMON_SOURCES := LargeNumber.cpp
+TARGET_SOURCES := Problem025.cpp
+TEST_SOURCES   := LargeNumberTest.cpp
+
+COMMON_OBJECTS := $(COMMON_SOURCES:.cpp=.o)
+TARGET_OBJECTS := $(TARGET_SOURCES:.cpp=.o)
+TEST_OBJECTS   := $(TEST_SOURCES:.cpp=.o)
+
 HEADERS := $(wildcard *.h)
 
-%.o: %.cpp $(HEADERS)
-	$(CC) $(CFLAGS) -c $< -o $@
+$(TARGET): $(COMMON_OBJECTS) $(TARGET_OBJECTS)
+	$(CC) -o $@ $(COMMON_OBJECTS) $(TARGET_OBJECTS)
 
-.PRECIOUS: %(TARGET) $(OBJECTS)
+$(TEST_TARGET): $(COMMON_OBJECTS) $(TEST_OBJECTS)
+	$(CC) -o $@ $(COMMON_OBJECTS) $(TEST_OBJECTS) $(LDFLAGS) 
 
-$(TARGET): $(OBJECTS)
-	$(CC) $(CFLAGS) $(OBJECTS) -o $@
+.cpp.o: $(HEADERS)
+	$(CC) $(CFLAGS) $< -o $@
 
 clean:
 	-rm -f *.o
-	-rm -f $(TARGET)
+	-rm -f $(TARGET) $(TEST_TARGET) 
+

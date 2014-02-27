@@ -1,6 +1,8 @@
 #ifndef LARGE_NUMBER_H
 #define LARGE_NUMBER_H
 
+#include <string>
+
 #include <stdint.h>
 #include <string.h>
 
@@ -14,13 +16,19 @@ public:
     virtual ~LargeNumber(void);
 
     void initialize(uint32_t startingValue);
+    std::string toString(void);
+    uint32_t getNumberLength(void);
 
-    LargeNumber & operator=(const LargeNumber &rhs);
+    LargeNumber& operator=(const LargeNumber &rhs);
+    LargeNumber& operator+=(const LargeNumber &rhs);
+    const LargeNumber operator+(const LargeNumber &other) const;
+ 
+    bool operator==(const LargeNumber &other) const;
+    bool operator!=(const LargeNumber &other) const;
 
 private:
 
     uint8_t* number_array;
-    uint32_t number_len;
 };
 
 #endif // LARGE_NUMBER_H 
