@@ -1,5 +1,6 @@
 #include "LargeNumber.h"
 
+#include <iostream>
 #include <sstream>
 
 
@@ -37,9 +38,9 @@ std::string LargeNumber::toString(void)
 {
     std::stringstream number_repr;
 
-    for (uint32_t i = 0; i < MAXIMUM_LARGE_NUMBER_LENGTH; ++i)
+    for (uint32_t i = getNumberLength(); i > 0; i--)
     {
-        number_repr << (uint32_t)number_array[i];
+        number_repr << (uint32_t)number_array[i-1];
     }
 
     return number_repr.str();
@@ -47,7 +48,7 @@ std::string LargeNumber::toString(void)
 
 uint32_t LargeNumber::getNumberLength(void)
 {
-    for (uint32_t i = (MAXIMUM_LARGE_NUMBER_LENGTH-1); i >= 0; --i)
+    for (uint32_t i = (MAXIMUM_LARGE_NUMBER_LENGTH-1); i >= 1; --i)
     {
         if (number_array[i] != 0)
         {
@@ -55,7 +56,7 @@ uint32_t LargeNumber::getNumberLength(void)
         }
     }
 
-    return 0;
+    return 1;
 }
 
 LargeNumber& LargeNumber::operator=(const LargeNumber &rhs)
