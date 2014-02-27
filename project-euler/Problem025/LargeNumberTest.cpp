@@ -1,8 +1,12 @@
 #include <gtest/gtest.h>
+#include <iostream>
 
-TEST(LargeNumberTest, Constructor)
+#include "LargeNumber.h"
+
+TEST(LargeNumber, Constructor)
 {
-    EXPECT_EQ(1,1);
+    LargeNumber myNumber;
+    EXPECT_EQ(1, 1);
 }
 
 int main(int argc, char **argv)
