@@ -10,6 +10,14 @@ LargeNumber::LargeNumber(void)
     initialize(0);
 }
 
+LargeNumber::LargeNumber( const LargeNumber &other)
+    : number_array(NULL)
+{
+    initialize(0);
+
+    *this = other;
+}
+
 LargeNumber::~LargeNumber(void)
 {
     // free the memory array if it exists
@@ -32,9 +40,21 @@ void LargeNumber::initialize(uint32_t startingValue)
 
     // zero out the array
     memset(number_array, 0, MAXIMUM_LARGE_NUMBER_LENGTH);
+
+    // set the initial value
+    uint32_t cur_value = startingValue;
+    uint32_t cur_idx = 0;
+    while (cur_value != 0)
+    {
+        number_array[cur_idx] = cur_value % 10;
+        cur_value = cur_value / 10;
+
+        if (++cur_idx >= MAXIMUM_LARGE_NUMBER_LENGTH)
+            break;
+    }
 }
 
-std::string LargeNumber::toString(void)
+std::string LargeNumber::toString(void) const
 {
     std::stringstream number_repr;
 
@@ -46,13 +66,13 @@ std::string LargeNumber::toString(void)
     return number_repr.str();
 }
 
-uint32_t LargeNumber::getNumberLength(void)
+uint32_t LargeNumber::getNumberLength(void) const
 {
     for (uint32_t i = (MAXIMUM_LARGE_NUMBER_LENGTH-1); i >= 1; --i)
     {
         if (number_array[i] != 0)
         {
-            return i;
+            return (i + 1);
         }
     }
 

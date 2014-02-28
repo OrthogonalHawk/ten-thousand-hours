@@ -16,9 +16,10 @@ public:
     virtual ~LargeNumber(void);
 
     void initialize(uint32_t startingValue);
-    std::string toString(void);
-    uint32_t getNumberLength(void);
+    std::string toString(void) const;
+    uint32_t getNumberLength(void) const;
 
+    LargeNumber(const LargeNumber &other);
     LargeNumber& operator=(const LargeNumber &rhs);
     LargeNumber& operator+=(const LargeNumber &rhs);
     const LargeNumber operator+(const LargeNumber &other) const;
