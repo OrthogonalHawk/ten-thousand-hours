@@ -4,7 +4,7 @@
 #include <stdint.h>
 #include <string.h>
 
-static const uint32_t GRID_SIZE = 5;
+static const uint32_t GRID_SIZE = 1001;
 uint32_t number_grid[GRID_SIZE][GRID_SIZE];
 
 enum DIRECTION
@@ -46,7 +46,6 @@ int main(void)
 
     do
     {
-std::cout << "Setting: " << cur_row << "," << cur_col << " to: " << spiral_number << std::endl;
         // set the next spiral number
         number_grid[cur_row][cur_col] = spiral_number++;
 
@@ -91,7 +90,16 @@ std::cout << "Setting: " << cur_row << "," << cur_col << " to: " << spiral_numbe
     // write the last number
     number_grid[cur_row][cur_col] = spiral_number;
 
-    print_grid(); 
+    // sum the numbers on the diagonals
+    uint32_t diagonal_sum = 0;
+    for (uint32_t i = 0; i < GRID_SIZE; ++i)
+    {
+        diagonal_sum += number_grid[i][i];
+        diagonal_sum += number_grid[GRID_SIZE-1-i][i];
+    }
+    diagonal_sum--; // double counted the very center, so reduce our count by 1
+
+    std::cout << "Found diagonal sum: " << diagonal_sum << std::endl;
 
     return 0;
 }
