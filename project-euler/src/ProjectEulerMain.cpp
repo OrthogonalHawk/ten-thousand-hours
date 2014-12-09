@@ -5,20 +5,11 @@
 
 #include "ProjectEulerSolutions.hpp"
 
-#define MAXIMUM_NUMBER_SOLUTIONS 3 
-
 const int MINIMUM_ARGUMENTS = 2;
 const int MAXIMUM_ARGUMENTS = 2;
 
 /* function prototype(s) */
 void printUsage(const char* programName);
-
-/* create a mapping between function pointers and problem number */
-void (*solutions[MAXIMUM_NUMBER_SOLUTIONS])(void) = {
-    NULL,
-    SolveProblem001,
-    NULL
-  }; 
 
 int main(int argc, char** argv)
 {
