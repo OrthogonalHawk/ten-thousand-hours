@@ -16,6 +16,7 @@ all: $(TARGET)
 TARGET_SOURCES := $(SRC_DIR)ProjectEulerMain.cpp \
                   $(SRC_DIR)Problem001.cpp \
                   $(SRC_DIR)Problem009.cpp \
+                  $(SRC_DIR)Problem011.cpp \
 
 TARGET_OBJECTS := $(addprefix $(OBJ_DIR),$(notdir $(TARGET_SOURCES:.cpp=.o)))
 

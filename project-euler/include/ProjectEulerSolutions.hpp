@@ -3,13 +3,14 @@
 
 /*--------------------- CONSTANTS --------------------*/
 
-#define MAXIMUM_NUMBER_SOLUTIONS 11 // actual number of problems + 2; using problem numbers as
-                                    //  the array index and ignoring the 0th entry 
+#define MAXIMUM_NUMBER_SOLUTIONS 100 // actual number of problems + 2; using problem numbers as
+                                     //  the array index and ignoring the 0th entry 
 
 
 /*--------------------- FUNCTION PROTOTYPES --------------------*/
 void SolveProblem001(void);
 void SolveProblem009(void);
+void SolveProblem011(void);
 
 
 /*--------------------- FUNCTION POINTER TABLE --------------------*/
@@ -25,6 +26,9 @@ void (*solutions[MAXIMUM_NUMBER_SOLUTIONS])(void) = {
     NULL,
     NULL,
     SolveProblem009,
+    NULL,               // SolveProblem010
+    SolveProblem011,
+    NULL
 };
 
 

@@ -1,6 +1,17 @@
 #include <iostream>
 #include <stdint.h>
 
+/* 
+ * @problem_number 11
+ * @problem_title "Largest Product in a Grid"
+ * @problem_statement
+ *  In the 20x20 grid below, four numbers along a diagonal have been marked in red. The product of
+ *   these numbers is 26 x 63 x 78 x 14 = 1788696. What is the greatest product of four adjacent
+ *   numbers in the same direction (up, down, left, right, or diagonally) in the 20x20 grid?
+ */
+
+namespace P011Sol {
+
 static const uint32_t GRID_SIZE = 20;
 static const uint32_t NUMBERS_TO_USE = 4;
 
@@ -106,19 +117,21 @@ uint32_t find_largest_available_product(uint32_t row, uint32_t col)
     return largest_product;
 }
 
-int main(void)
+} // end of P011Sol namespace
+
+void SolveProblem011(void)
 {
     uint32_t largest_product = 0;
     uint32_t largest_product_row = 0;
     uint32_t largest_product_col = 0;
 
-    for (uint32_t row = 0; row < GRID_SIZE; ++row)
+    for (uint32_t row = 0; row < P011Sol::GRID_SIZE; ++row)
     {
-        for (uint32_t col = 0; col < GRID_SIZE; ++col)
+        for (uint32_t col = 0; col < P011Sol::GRID_SIZE; ++col)
         {
             std::cout << row << "," << col << std::endl;
 
-            uint32_t cur_point_largest_product = find_largest_available_product(row, col);
+            uint32_t cur_point_largest_product = P011Sol::find_largest_available_product(row, col);
             if (cur_point_largest_product > largest_product)
             {
                 largest_product = cur_point_largest_product;
@@ -130,7 +143,5 @@ int main(void)
 
     std::cout << "Found largest grid product: " << largest_product << std::endl;
     std::cout << "  at (" << largest_product_row << "," << largest_product_col << ")" << std::endl;
-
-    return 0;
 }
 
