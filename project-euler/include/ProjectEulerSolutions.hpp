@@ -10,6 +10,7 @@
 /*--------------------- FUNCTION PROTOTYPES --------------------*/
 void SolveProblem001(void);
 void SolveProblem002(void);
+void SolveProblem004(void);
 void SolveProblem009(void);
 void SolveProblem011(void);
 void SolveProblem014(void);
@@ -22,7 +23,7 @@ void (*solutions[MAXIMUM_NUMBER_SOLUTIONS])(void) = {
     SolveProblem001,
     SolveProblem002,
     NULL,
-    NULL,
+    SolveProblem004,
     NULL,               // SolveProblem005
     NULL,
     NULL,
