@@ -2,6 +2,8 @@
 #include <stdint.h>
 #include <unordered_map>
 
+namespace P014Sol {
+
 static const uint64_t MAXIMUM_STARTING_NUMBER = 1000000;
 
 
@@ -14,15 +16,17 @@ uint64_t find_next_collatz_number(uint64_t current_number)
     else
         return (current_number / 2);
 }
+
+} // end P014Sol namespace
  
-int main(void)
+void SolveProblem014(void)
 {
     std::unordered_map<uint64_t, uint64_t> known_sequences;
     uint64_t max_number_of_terms = 0;
     uint64_t max_starting_number = 0;
 
     for (uint64_t starting_number = 1;
-         starting_number < MAXIMUM_STARTING_NUMBER;
+         starting_number < P014Sol::MAXIMUM_STARTING_NUMBER;
          ++starting_number)
     {
         uint64_t cur_collatz_number = starting_number;
@@ -30,7 +34,7 @@ int main(void)
         
         while (cur_collatz_number != 1)
         {
-            cur_collatz_number = find_next_collatz_number(cur_collatz_number);
+            cur_collatz_number = P014Sol::find_next_collatz_number(cur_collatz_number);
             number_of_terms++;
 
             // see if we can shortcut further evaluation
@@ -53,10 +57,8 @@ int main(void)
     }
 
     std::cout << "Maximum number of terms for a starting number less than "
-              << MAXIMUM_STARTING_NUMBER << " is: " << max_number_of_terms << std::endl;
+              << P014Sol::MAXIMUM_STARTING_NUMBER << " is: " << max_number_of_terms << std::endl;
 
     std::cout << "Found maximum steps with starting number: " << max_starting_number << std::endl; 
-
-    return 0;
 }
 

@@ -11,6 +11,7 @@
 void SolveProblem001(void);
 void SolveProblem009(void);
 void SolveProblem011(void);
+void SolveProblem014(void);
 
 
 /*--------------------- FUNCTION POINTER TABLE --------------------*/
@@ -28,7 +29,10 @@ void (*solutions[MAXIMUM_NUMBER_SOLUTIONS])(void) = {
     SolveProblem009,
     NULL,               // SolveProblem010
     SolveProblem011,
-    NULL
+    NULL,
+    NULL,
+    SolveProblem014,
+    NULL                // SolveProblem015
 };
 
 

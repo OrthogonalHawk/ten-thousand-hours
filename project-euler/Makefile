@@ -2,7 +2,7 @@
 TARGET  := project_euler 
  
 CC      := g++
-CFLAGS  := -c -Wall -g
+CFLAGS  := -c -Wall -std=c++11
 
 INCLUDE_DIR := include/
 
@@ -17,6 +17,7 @@ TARGET_SOURCES := $(SRC_DIR)ProjectEulerMain.cpp \
                   $(SRC_DIR)Problem001.cpp \
                   $(SRC_DIR)Problem009.cpp \
                   $(SRC_DIR)Problem011.cpp \
+                  $(SRC_DIR)Problem014.cpp \
 
 TARGET_OBJECTS := $(addprefix $(OBJ_DIR),$(notdir $(TARGET_SOURCES:.cpp=.o)))
 
