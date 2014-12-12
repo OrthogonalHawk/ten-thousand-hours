@@ -17,7 +17,7 @@ void SolveProblem001(void)
 
   for (uint32_t i = 0; i < MAXIMUM_NUMBER; ++i) {
     if (i % 3 == 0 || i % 5 == 0) {
-      multiples_sum += 1;
+      multiples_sum += i;
     }    
   }
 
