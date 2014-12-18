@@ -13,6 +13,7 @@ void SolveProblem002(void);
 void SolveProblem004(void);
 void SolveProblem009(void);
 void SolveProblem011(void);
+void SolveProblem012(void);
 void SolveProblem014(void);
 
 
@@ -31,7 +32,7 @@ void (*solutions[MAXIMUM_NUMBER_SOLUTIONS])(void) = {
     SolveProblem009,
     NULL,               // SolveProblem010
     SolveProblem011,
-    NULL,
+    SolveProblem012,
     NULL,
     SolveProblem014,
     NULL                // SolveProblem015
