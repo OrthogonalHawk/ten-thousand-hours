@@ -1,6 +1,8 @@
 #!/usr/bin/python
 #!/bin/env python
 
+# solves the problem from: https://code.google.com/codejam/contest/351101/dashboard#s=p0
+
 from operator import itemgetter
 import sys
 
