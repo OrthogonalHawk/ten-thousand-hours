@@ -1,0 +1,18 @@
+History of Cryptography:
+ - letter frequency attacks require a certain amount of ciphertext before
+    they can be executed
+ - many historical ciphers exposed critical information that enabled
+    side channel attacks (letter frequency)
+
+Discrete Probability I:
+
+Discrete Probability II:
+
+One Time Pad:
+ - perfect secrecy means that a given ciphertext reveals nothing about
+    the plaintext. In other words, the probability that a given ciphertext
+    came from one key/message pair is equal to the probability that it
+    came from another key/message pair.
+ - perfect secrecy requires a key that is as long or longer than the
+    message that it encrypts (proved by Shannon).
+
