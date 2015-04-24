@@ -1,9 +1,10 @@
 #!/usr/bin/python
 #!/bin/env python
 
+import re
 import sys
 
-MSGS = [ \
+CIPHERTEXTS = [ \
   "315c4eeaa8b5f8aaf9174145bf43e1784b8fa00dc71d885a804e5ee9fa40b16349c146fb778cdf2d3aff021dfff5b403b510d0d0455468aeb98622b137dae857553ccd8883a7bc37520e06e515d22c954eba5025b8cc57ee59418ce7dc6bc41556bdb36bbca3e8774301fbcaa3b83b220809560987815f65286764703de0f3d524400a19b159610b11ef3e", \
   "234c02ecbbfbafa3ed18510abd11fa724fcda2018a1a8342cf064bbde548b12b07df44ba7191d9606ef4081ffde5ad46a5069d9f7f543bedb9c861bf29c7e205132eda9382b0bc2c5c4b45f919cf3a9f1cb74151f6d551f4480c82b2cb24cc5b028aa76eb7b4ab24171ab3cdadb8356f", \
   "32510ba9a7b2bba9b8005d43a304b5714cc0bb0c8a34884dd91304b8ad40b62b07df44ba6e9d8a2368e51d04e0e7b207b70b9b8261112bacb6c866a232dfe257527dc29398f5f3251a0d47e503c66e935de81230b59b7afb5f41afa8d661cb", \
@@ -16,6 +17,26 @@ MSGS = [ \
   "466d06ece998b7a2fb1d464fed2ced7641ddaa3cc31c9941cf110abbf409ed39598005b3399ccfafb61d0315fca0a314be138a9f32503bedac8067f03adbf3575c3b8edc9ba7f537530541ab0f9f3cd04ff50d66f1d559ba520e89a2cb2a83", \
   "32510ba9babebbbefd001547a810e67149caee11d945cd7fc81a05e9f85aac650e9052ba6a8cd8257bf14d13e6f0a803b54fde9e77472dbff89d71b57bddef121336cb85ccb8f3315f4b52e301d16e9f52f904" \
 ]
+
+DEFAULT_CHAR_SCORE = 0.0
+CHAR_SCORE = {
+              '\x41': 8.167, '\x42': 1.492, '\x43': 2.782, '\x44': 4.253, '\x45': 12.702,
+              '\x46': 2.228, '\x47': 2.015, '\x48': 6.094, '\x49': 6.966, '\x4A': 0.153,
+              '\x4B': 0.772, '\x4C': 4.025, '\x4D': 2.406, '\x4E': 6.749, '\x4F': 7.507,
+              '\x50': 1.929, '\x51': 0.095, '\x52': 5.987, '\x53': 6.327, '\x54': 9.056,
+              '\x55': 2.758, '\x56': 0.978, '\x57': 2.360, '\x58': 0.150, '\x59': 1.974,
+              '\x5A': 0.074,
+
+              '\x61': 8.167, '\x62': 1.492, '\x63': 2.782, '\x64': 4.253, '\x65': 12.702,
+              '\x66': 2.228, '\x67': 2.015, '\x68': 6.094, '\x69': 6.966, '\x6A': 0.153,
+              '\x6B': 0.772, '\x6C': 4.025, '\x6D': 2.406, '\x6E': 6.749, '\x6F': 7.507,
+              '\x70': 1.929, '\x71': 0.095, '\x72': 5.987, '\x73': 6.327, '\x74': 9.056,
+              '\x75': 2.758, '\x76': 0.978, '\x77': 2.360, '\x78': 0.150, '\x79': 1.974,
+              '\x7A': 0.074, 
+
+              '\x20': 10,
+              '\x2C': 3.0
+             }
 
 def strxor(a, b):     # xor two strings of different lengths
     if len(a) > len(b):
@@ -32,11 +53,58 @@ def encrypt(key, msg):
     print c.encode('hex')
     return c
 
+def score_res_char(char):
+    if char in CHAR_SCORE.keys():
+        return CHAR_SCORE[char]
+    else:
+        return DEFAULT_CHAR_SCORE
+
+def lcd_cipher_len():
+    lcd_len = None
+    for i in range(len(CIPHERTEXTS)):
+        if lcd_len == None or lcd_len > len(CIPHERTEXTS[i]):
+            lcd_len = len(CIPHERTEXTS[i])
+
+    return lcd_len
+
+def calculate_key_score(col, key):
+    score = 0
+    key_str = chr(key)
+
+    # go through each cipher text
+    for ciphertext in range(len(CIPHERTEXTS)):
+
+        # get the character from this ciphertext in the correct column
+        cipher_col_char = CIPHERTEXTS[ciphertext][col]
+
+        # XOR this character with the key candidate
+        res_char = strxor(key_str, cipher_col_char)
+
+        score += score_res_char(res_char)
+
+    return score
+
 def main():
-    #key = random(1024)
-    #ciphertexts = [encrypt(key, msg) for msg in MSGS]
-    for msg in MSGS:
-        print msg
+
+    key = ""
+
+    for col in range(lcd_cipher_len()):
+
+        key_scores = []
+        # calculate the column score for a given key
+        for key_candidate in range(256):
+            key_scores.append(calculate_key_score(col, key_candidate))
+
+        # find the maximum score for this column
+        max_score = max(key_scores)
+        max_score_idx = key_scores.index(max_score)
+
+        key = key + chr(max_score_idx)
+
+    # decode the messages
+    for ciphertext in CIPHERTEXTS:
+        print strxor(ciphertext, key)
+        print
 
 if __name__ == "__main__":
     main()
