@@ -1,8 +1,9 @@
 #!/usr/bin/python
 #!/bin/env python
 
-import sys
+# https://github.com/instructure/contests/tree/master/2012-mebipenny/contest/call-me-maybe
 
+import sys
 
 conversion_dict = {'A':2, 'B':2, 'C':2,
                    'D':3, 'E':3, 'F':3,
